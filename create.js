@@ -47,7 +47,7 @@ function play() {
     };
     const base_64 = b64EncodeUnicode(JSON.stringify(puzzle));
     console.log(base_64);
-    const url = "index.html?p=" + base_64;
+    const url = "play.html?p=" + base_64;
     window.open(url);
 }
 
