@@ -1,0 +1,192 @@
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible');
+
+header > h1 {
+    font-weight: 400;
+}
+
+h1 {
+    font-family: "Atkinson Hyperlegible", sans-serif;
+    text-align: center;
+    font-style: normal;
+}
+
+main {
+    font-family: "Atkinson Hyperlegible", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+#game-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#message {
+    margin-top: 16px;
+    margin-bottom: 16px;
+    text-align: center;
+    font-size: 1.4rem;
+    opacity: 0;
+    height: 1.6rem;
+}
+
+#actions {
+    display: block;
+    width: 50%;
+    margin: auto;
+    margin-top: 32px;
+    text-align: center;
+}
+
+#actions > input {
+    min-width: 80px;
+    height: 48px;
+    padding: 8px;
+    padding-left: 12px;
+    padding-right: 12px;
+    border-radius: 24px;
+    border: 1px solid black;
+    margin-left: 6px;
+    margin-right: 6px;
+    cursor: pointer;
+    background-color: #fff;
+}
+
+#mistakes {
+    width: 30%;
+    margin: auto;
+    text-align: center;
+}
+
+#mistakes ul {
+    list-style: none;
+    display: inline-block;
+    height: 2rem;
+    width: 120px;
+    text-align: left;
+    margin-bottom: 0.5rem;
+}
+#mistakes ul li {
+    list-style: none;
+    display: inline-block;
+    margin-right: 1rem;
+    margin-bottom: 0;
+}
+
+#game-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    align-items: center;
+    justify-content: center;
+}
+
+#game-grid .option {
+    font-family: "Atkinson Hyperlegible", sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    font-style: normal;
+    text-align: center;
+    text-transform: uppercase;
+    vertical-align: middle;
+    border: 1px solid #888;
+    min-width: 160px;
+    min-height: 80px;
+    margin: 8px;
+    border-radius: 8px;
+    background-color: #eee;
+    color: #000;
+    cursor:pointer;
+}
+
+#game-grid .option:hover {
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid black;
+    min-width: 120px;
+    min-height: 80px;
+    margin: 8px;
+    border-radius: 8px;
+    background-color: #ccc;
+    cursor:pointer;
+}
+
+#game-grid .option.pressed {
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid black;
+    min-width: 120px;
+    min-height: 80px;
+    margin: 8px;
+    border-radius: 8px;
+    background-color: #444;
+    color: #eee;
+    cursor:pointer;
+}
+
+
+@keyframes fade-out {
+  0% {opacity: 1;}
+  50% {opacity: 1;}
+  100% {opacity: 0;}
+}
+
+.fading {
+    animation-name: fade-out;
+    animation-duration: 4s;
+}
+
+#game-grid .option.confirmed.group-1 {
+    background-color: #8fc;
+}
+#game-grid .option.confirmed.group-2 {
+    background-color: #f86;
+}
+#game-grid .option.confirmed.group-3 {
+    background-color: #ff8;
+}
+#game-grid .option.confirmed.group-4 {
+    background-color: #8cf;
+}
+
+/* CREATION */
+
+#creation {
+    width: 50%;
+    margin: auto;
+}
+
+section.group-creation {
+    margin: 32px;
+}
+
+section.group-creation > div {
+    text-align: center;
+}
+
+.group-explanation {
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.group-word {
+    width: 23%;
+    margin: auto;
+}
+
+#creation-output {
+    border: 1px solid black;
+    min-height: 96px;
+    width: 40%;
+    margin: auto;
+}
+
+#play-creation {
+    display: block;
+    text-align: center;
+    font-size: 1.4rem;
+    width: 96px;
+    margin: auto;
+    margin-top: 2rem;
+}

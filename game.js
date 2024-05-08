@@ -1,0 +1,169 @@
+// From https://stackoverflow.com/questions/30106476/using-javascripts-atob-to-decode-base64-doesnt-properly-decode-utf-8-strings
+function b64DecodeUnicode(str) {
+    // Going backwards: from bytestream, to percent-encoding, to original string.
+    return decodeURIComponent(atob(str).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+}
+
+
+const selected_words = new Set();
+const selected_buttons = new Set();
+let puzzle;
+let solutions = 0;
+let incorrect_guesses = 0;
+let game_over = false;
+const groups = [];
+
+function select(button) {
+    if (game_over) { return; }
+    if (button.classList.contains("confirmed")){ return; }
+
+    if (button.classList.contains("pressed")) {
+        selected_words.delete(button.textContent);
+        selected_buttons.delete(button);
+    } else if (selected_words.size < 4) {
+        selected_words.add(button.textContent);
+        selected_buttons.add(button);
+    } else {
+        return;
+    }
+    button.classList.toggle("pressed");
+    document.getElementById("submit").disabled = !(selected_words.size == 4);
+    document.getElementById("deselect").disabled = !(selected_words.size > 0);
+}
+
+function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        let temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+    return array;
+}
+
+
+function setup() {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+
+    if (!urlParams.has('p')) {
+        console.log("No puzzle given.");
+        return
+    }
+    const puzzle_string = urlParams.get('p');
+    const puzzle_json = b64DecodeUnicode(puzzle_string);
+    
+    puzzle = JSON.parse(puzzle_json);
+    for (let i = 0; i < puzzle.groups.length; i ++) {
+        groups.push(new Set(puzzle.groups[i]));
+    }
+    const words = puzzle.groups.flat();
+    shuffle(words);
+
+    const container = document.getElementById("game-grid");
+    for (let i = 0; i < container.childElementCount; i ++) {
+        let button = container.children[i];
+        // button.classList.add("unselected");
+        // button.classList.add("unconfirmed");
+        button.dataset.index = i
+        button.addEventListener("click", function(event) {
+            select(button);
+        })
+        button.textContent = words[i];
+    }
+
+    document.getElementById("deselect").disabled = true;
+    document.getElementById("submit").disabled = true;
+    document.getElementById("shuffle").onclick = shuffle_words;
+    document.getElementById("deselect").onclick = deselect_words;
+    document.getElementById("submit").onclick = submit_words;
+
+}
+
+function shuffle_words() {
+    // TODO: Keep solved words at top
+
+    const container = document.getElementById("game-grid");
+    const children = Array.from(container.children);
+    container.replaceChildren(...shuffle(children));
+}
+
+function deselect_words() {
+    const container = document.getElementById("game-grid");
+    for (let i = 0; i < container.childElementCount; i ++) {
+        let button = container.children[i];
+        button.classList.remove("pressed");
+    }
+    selected_words.clear();
+    selected_buttons.clear();
+    document.getElementById("submit").disabled = true;
+    document.getElementById("deselect").disabled = true;
+}
+
+function submit_words() {
+    let group_match = -1;
+    let one_away = false;
+    for (let i = 0; i < groups.length; i ++) {
+        const incorrect = groups[i].difference(selected_words);
+        if (incorrect.size == 0) {
+            group_match = i;
+        } else if (incorrect.size == 1) {
+            one_away = true;
+        }
+    }
+    
+    if (group_match >= 0) {
+        set_message("Correct! " + puzzle.explanations[group_match]);
+        selected_buttons.forEach(function(btn) { 
+            btn.classList.add("group-" + (group_match+1)); 
+            btn.classList.add("confirmed"); 
+        });
+        console.log(selected_buttons);
+        deselect_words();
+        // TODO: Move them to top
+        solutions ++;
+        if (solutions == 4) {
+            win();
+        }
+    } else {
+        if (one_away) {
+            set_message("One away!");
+        }
+        incorrect_guess();
+    }
+}
+
+function incorrect_guess() {
+    incorrect_guesses ++;
+    const lives = document.getElementById("lives");
+    lives.removeChild(lives.lastChild);
+    if (incorrect_guesses == 3) {
+        lose();
+    }
+}
+
+function win() {
+    game_over = true;
+    // TODO: Reveal answers!
+}
+
+function lose() {
+    game_over = true;
+    set_message("You lose :(");
+    deselect_words();
+}
+
+function set_message(text) {
+    const message = document.getElementById("message");
+    message.textContent = text;
+    // Replay animation
+    message.classList.remove("fading");
+    message.classList.add("fading");
+    message.style.animation = 'none';
+    message.offsetHeight; // trigger reflow
+    message.style.animation = null; 
+}
+
+setup();
