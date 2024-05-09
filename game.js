@@ -65,13 +65,17 @@ function setup() {
     const container = document.getElementById("game-grid");
     for (let i = 0; i < container.childElementCount; i ++) {
         let button = container.children[i];
-        // button.classList.add("unselected");
-        // button.classList.add("unconfirmed");
         button.dataset.index = i
         button.addEventListener("click", function(event) {
             select(button);
         })
         button.textContent = words[i];
+    }
+
+    const answers = document.getElementById("answers");
+    for (let i = 0; i < answers.childElementCount; i ++) {
+        let answer = answers.children[i];
+        answer.textContent = puzzle.explanations[i] + ": " + puzzle.groups[i].join(", ");
     }
 
     document.getElementById("deselect").disabled = true;
@@ -84,10 +88,12 @@ function setup() {
 
 function shuffle_words() {
     // TODO: Keep solved words at top
-
     const container = document.getElementById("game-grid");
     const children = Array.from(container.children);
-    container.replaceChildren(...shuffle(children));
+    const solved_words = children.slice(0, solutions*4);
+    const unsolved_words = children.slice(solutions*4);
+
+    container.replaceChildren(...solved_words.concat(shuffle(unsolved_words)));
 }
 
 function deselect_words() {
@@ -115,18 +121,7 @@ function submit_words() {
     }
     
     if (group_match >= 0) {
-        set_message("Correct! " + puzzle.explanations[group_match]);
-        selected_buttons.forEach(function(btn) { 
-            btn.classList.add("group-" + (group_match+1)); 
-            btn.classList.add("confirmed"); 
-        });
-        console.log(selected_buttons);
-        deselect_words();
-        // TODO: Move them to top
-        solutions ++;
-        if (solutions == 4) {
-            win();
-        }
+        correct_guess(group_match);
     } else {
         if (one_away) {
             set_message("One away!");
@@ -141,6 +136,37 @@ function incorrect_guess() {
     lives.removeChild(lives.lastChild);
     if (incorrect_guesses == 3) {
         lose();
+    }
+}
+
+function correct_guess(group_match) {
+    set_message("Correct! " + puzzle.explanations[group_match]);
+    selected_buttons.forEach(function(btn) { 
+        btn.classList.add("group-" + (group_match+1)); 
+        btn.classList.add("confirmed"); 
+        const grid = document.getElementById("game-grid")
+        grid.insertBefore(btn, grid.children[0]);
+    });
+    deselect_words();
+
+    const answer = document.getElementById("answers").children[group_match];
+    answer.classList.add("visible");
+    const grid = document.getElementById("game-grid").getBoundingClientRect();
+    const rect = document.getElementById("game-grid").children[0].getBoundingClientRect();
+    const oy = rect.top;
+    const h = rect.bottom - rect.top + 8;
+    answer.style.top = (oy + (h * solutions)) + "px";
+    answer.style.left = (grid.left + 8) + "px";
+    answer.style.width = (grid.right - grid.left - 16) + "px";
+    answer.style.height = (h - 8) + "px";
+    answer.classList.add("group-" + (group_match+1));
+    console.log(grid);
+    console.log(grid.left);
+    console.log(grid.right);
+
+    solutions ++;
+    if (solutions == 4) {
+        win();
     }
 }
 

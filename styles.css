@@ -80,6 +80,18 @@ footer {
     margin-bottom: 0;
 }
 
+#answers > div {
+    position: absolute;
+    text-align: center;
+    visibility: hidden;
+    border: 1px solid black;
+    border-radius: 8px;
+}
+
+#answers > div.visible {
+    visibility: visible;
+}
+
 #game-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
