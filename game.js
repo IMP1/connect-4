@@ -160,9 +160,6 @@ function correct_guess(group_match) {
     answer.style.width = (grid.right - grid.left - 16) + "px";
     answer.style.height = (h - 8) + "px";
     answer.classList.add("group-" + (group_match+1));
-    console.log(grid);
-    console.log(grid.left);
-    console.log(grid.right);
 
     solutions ++;
     if (solutions == 4) {
