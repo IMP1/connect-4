@@ -23,10 +23,10 @@ main {
 }
 
 #message {
-    margin-top: 16px;
-    margin-bottom: 16px;
+    margin-top: 1.6em;
+    margin-bottom: 1.6em;
     text-align: center;
-    font-size: 1.4rem;
+    font-size: 1.4em;
     opacity: 0;
     height: 1.6rem;
 }
@@ -35,22 +35,23 @@ main {
     display: block;
     width: 50%;
     margin: auto;
-    margin-top: 32px;
+    margin-top: 3em;
     text-align: center;
 }
 
 #actions > input {
     min-width: 80px;
-    height: 48px;
-    padding: 8px;
-    padding-left: 12px;
-    padding-right: 12px;
-    border-radius: 24px;
+    height: 1.6em;
+    padding: 0.6em;
+    padding-left: 1em;
+    padding-right: 1em;
+    border-radius: 0.8em;
     border: 1px solid black;
     margin-left: 6px;
     margin-right: 6px;
     cursor: pointer;
     background-color: #fff;
+    line-height: 0.5em;
 }
 
 #mistakes {
@@ -84,7 +85,7 @@ main {
 
 #game-grid .option {
     font-family: "Atkinson Hyperlegible", sans-serif;
-    font-size: 16px;
+    font-size: 1em;
     font-weight: 700;
     font-style: normal;
     text-align: center;
@@ -152,6 +153,10 @@ main {
 
 /* CREATION */
 
+input {
+    font-size: 1em;
+}
+
 #creation {
     width: 50%;
     margin: auto;
@@ -171,7 +176,8 @@ section.group-creation > div {
 }
 
 .group-word {
-    width: 23%;
+    display: inline-block;
+    width: 20%;
     margin: auto;
 }
 
@@ -185,8 +191,49 @@ section.group-creation > div {
 #play-creation {
     display: block;
     text-align: center;
-    font-size: 1.4rem;
-    width: 96px;
+    font-size: 1.2em;
+    padding-left: 1em;
+    padding-right: 1em;
     margin: auto;
     margin-top: 2rem;
+}
+
+.group-1 {
+    background-color: #8fc;
+}
+.group-2 {
+    background-color: #f86;
+}
+.group-3 {
+    background-color: #ff8;
+}
+.group-4 {
+    background-color: #8cf;
+}
+
+::placeholder {
+  color: rgba(0, 0, 0, 0.5);
+  opacity: 1; /* Firefox */
+}
+
+input[type=text] {
+    border: 1px solid black;
+    padding: 4px;
+}
+
+/* Responsive Bits */
+
+@media all and (min-width: 699px) and (max-width: 520px), (max-width: 1151px) {
+    body {
+        font-size: 5vw;
+    }
+    #creation, #mistakes, #actions  {
+        width: 100%;
+    }
+    #mistakes > ul {
+        width: 30%;
+    }
+    #game-grid > .option {
+
+    }
 }
