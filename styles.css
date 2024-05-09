@@ -110,7 +110,7 @@ footer {
     vertical-align: middle;
     border: 1px solid #888;
     min-width: 160px;
-    min-height: 80px;
+    min-height: 6em;
     margin: 8px;
     border-radius: 8px;
     background-color: #eee;
@@ -131,16 +131,8 @@ footer {
 }
 
 #game-grid .option.pressed {
-    text-align: center;
-    vertical-align: middle;
-    border: 1px solid black;
-    min-width: 120px;
-    min-height: 80px;
-    margin: 8px;
-    border-radius: 8px;
     background-color: #444;
     color: #eee;
-    cursor:pointer;
 }
 
 
@@ -251,6 +243,6 @@ input[type=text] {
         width: 30%;
     }
     #game-grid > .option {
-
+        height: 6em;
     }
 }
