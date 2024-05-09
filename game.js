@@ -155,7 +155,7 @@ function correct_guess(group_match) {
     const rect = document.getElementById("game-grid").children[0].getBoundingClientRect();
     const oy = rect.top;
     const h = rect.bottom - rect.top + 8;
-    answer.style.top = (oy + (h * solutions)) + "px";
+    answer.style.top = (oy + ((h + 8) * solutions)) + "px";
     answer.style.left = (grid.left + 8) + "px";
     answer.style.width = (grid.right - grid.left - 16) + "px";
     answer.style.height = (h - 8) + "px";
