@@ -243,6 +243,6 @@ input[type=text] {
         width: 30%;
     }
     #game-grid > .option {
-        height: 6em;
+        height: 4em;
     }
 }
