@@ -16,6 +16,11 @@ main {
     font-style: normal;
 }
 
+footer {
+    margin-top: 6em;
+    text-align: center;
+}
+
 #game-container {
     display: flex;
     align-items: center;
