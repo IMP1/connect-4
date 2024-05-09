@@ -92,6 +92,15 @@ footer {
     visibility: visible;
 }
 
+#answers > div > div {
+    text-wrap: nowrap;
+}
+
+#answers > div > div.answer-word-list {
+    font-size: 0.8em;
+}
+
+
 #game-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -107,6 +116,7 @@ footer {
     font-style: normal;
     text-align: center;
     text-transform: uppercase;
+    text-wrap: nowrap;
     vertical-align: middle;
     border: 1px solid #888;
     min-width: 160px;
@@ -251,6 +261,6 @@ input[type=text] {
         width: 30%;
     }
     #game-grid > .option {
-
+        height: 8rem;
     }
 }

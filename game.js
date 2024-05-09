@@ -43,6 +43,36 @@ function shuffle(array) {
     return array;
 }
 
+function fitText(outputElement){
+    // max font size in pixels
+    const maxFontSize = parseFloat(getComputedStyle(outputElement).fontSize);
+    // get element's width
+    let width = outputElement.clientWidth;
+    // get content's width
+    let contentWidth = outputElement.scrollWidth;
+    // get fontSize
+    let fontSize = parseInt(window.getComputedStyle(outputElement, null).getPropertyValue('font-size'),10);
+    // if content's width is bigger then elements width - overflow
+    if (contentWidth > width){
+        fontSize = Math.ceil(fontSize * width/contentWidth,10);
+        fontSize =  fontSize > maxFontSize  ? fontSize = maxFontSize  : fontSize - 1;
+        outputElement.style.fontSize = fontSize+'px';   
+    } else {
+        // // content is smaller then width... let's resize in 1 px until it fits 
+        // while (contentWidth === width && fontSize < maxFontSize){
+        //     fontSize = Math.ceil(fontSize) + 1;
+        //     fontSize = fontSize > maxFontSize  ? fontSize = maxFontSize  : fontSize;
+        //     outputElement.style.fontSize = fontSize+'px';   
+        //     // update widths
+        //     width = outputElement.clientWidth;
+        //     contentWidth = outputElement.scrollWidth;
+        //     if (contentWidth > width){
+        //         outputElement.style.fontSize = fontSize-1+'px'; 
+        //     }
+        // }
+    }
+}
+
 
 function setup() {
     const queryString = window.location.search;
@@ -70,12 +100,14 @@ function setup() {
             select(button);
         })
         button.textContent = words[i];
+        fitText(button);
     }
 
     const answers = document.getElementById("answers");
     for (let i = 0; i < answers.childElementCount; i ++) {
         let answer = answers.children[i];
-        answer.textContent = puzzle.explanations[i] + ": " + puzzle.groups[i].join(", ");
+        answer.children[0].textContent = puzzle.explanations[i];
+        answer.children[1].textContent = puzzle.groups[i].join(", ");
     }
 
     document.getElementById("deselect").disabled = true;
@@ -140,7 +172,7 @@ function incorrect_guess() {
 }
 
 function correct_guess(group_match) {
-    set_message("Correct! " + puzzle.explanations[group_match]);
+    set_message("Correct!");
     selected_buttons.forEach(function(btn) { 
         btn.classList.add("group-" + (group_match+1)); 
         btn.classList.add("confirmed"); 
@@ -160,6 +192,8 @@ function correct_guess(group_match) {
     answer.style.width = (grid.right - grid.left - 16) + "px";
     answer.style.height = (h - 8) + "px";
     answer.classList.add("group-" + (group_match+1));
+    fitText(answer.children[0]);
+    fitText(answer.children[1]);
 
     solutions ++;
     if (solutions == 4) {
