@@ -109,8 +109,8 @@ footer {
     text-transform: uppercase;
     vertical-align: middle;
     border: 1px solid #888;
-    min-width: 160px;
-    min-height: 6em;
+    width: 160px;
+    height: 6em;
     margin: 8px;
     border-radius: 8px;
     background-color: #eee;
@@ -119,13 +119,7 @@ footer {
 }
 
 #game-grid .option:hover {
-    text-align: center;
-    vertical-align: middle;
     border: 1px solid black;
-    min-width: 120px;
-    min-height: 80px;
-    margin: 8px;
-    border-radius: 8px;
     background-color: #ccc;
     cursor:pointer;
 }
@@ -243,6 +237,6 @@ input[type=text] {
         width: 30%;
     }
     #game-grid > .option {
-        height: 4em;
+        height: 3em;
     }
 }
