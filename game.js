@@ -176,8 +176,9 @@ function correct_guess(group_match) {
     selected_buttons.forEach(function(btn) { 
         btn.classList.add("group-" + (group_match+1)); 
         btn.classList.add("confirmed"); 
-        const grid = document.getElementById("game-grid")
-        grid.insertBefore(btn, grid.children[0]);
+        const grid = document.getElementById("game-grid");
+        const idx = 4 * solutions;
+        grid.insertBefore(btn, grid.children[idx]);
     });
     deselect_words();
 
