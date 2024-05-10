@@ -190,13 +190,13 @@ function correct_guess(group_match) {
 
 function win() {
     game_over = true;
-    // TODO: Reveal answers!
 }
 
 function lose() {
     game_over = true;
     set_message("You lose :(");
     deselect_words();
+    // TODO: Give option to give up and show answers, and prompt to refresh to try again
 }
 
 function set_message(text) {
