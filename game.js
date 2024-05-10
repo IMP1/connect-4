@@ -29,7 +29,7 @@ function select(button) {
         return;
     }
     button.classList.toggle("pressed");
-    document.getElementById("submit").disabled = !(selected_words.size == 4);
+    document.getElementById("submit").disabled = !(selected_words.size === 4);
     document.getElementById("deselect").disabled = !(selected_words.size > 0);
 }
 
@@ -131,9 +131,9 @@ function submit_words() {
     let one_away = false;
     for (let i = 0; i < groups.length; i ++) {
         const incorrect = groups[i].difference(selected_words);
-        if (incorrect.size == 0) {
+        if (incorrect.size === 0) {
             group_match = i;
-        } else if (incorrect.size == 1) {
+        } else if (incorrect.size === 1) {
             one_away = true;
         }
     }
@@ -152,7 +152,7 @@ function incorrect_guess() {
     incorrect_guesses ++;
     const lives = document.getElementById("lives");
     lives.removeChild(lives.lastChild);
-    if (incorrect_guesses == 3) {
+    if (incorrect_guesses === 3) {
         lose();
     }
 }
