@@ -57,19 +57,6 @@ function fitText(outputElement){
         fontSize = Math.ceil(fontSize * width/contentWidth,10);
         fontSize =  fontSize > maxFontSize  ? fontSize = maxFontSize  : fontSize - 1;
         outputElement.style.fontSize = fontSize+'px';   
-    } else {
-        // // content is smaller then width... let's resize in 1 px until it fits 
-        // while (contentWidth === width && fontSize < maxFontSize){
-        //     fontSize = Math.ceil(fontSize) + 1;
-        //     fontSize = fontSize > maxFontSize  ? fontSize = maxFontSize  : fontSize;
-        //     outputElement.style.fontSize = fontSize+'px';   
-        //     // update widths
-        //     width = outputElement.clientWidth;
-        //     contentWidth = outputElement.scrollWidth;
-        //     if (contentWidth > width){
-        //         outputElement.style.fontSize = fontSize-1+'px'; 
-        //     }
-        // }
     }
 }
 
@@ -119,7 +106,6 @@ function setup() {
 }
 
 function shuffle_words() {
-    // TODO: Keep solved words at top
     const container = document.getElementById("game-grid");
     const children = Array.from(container.children);
     const solved_words = children.slice(0, solutions*4);
